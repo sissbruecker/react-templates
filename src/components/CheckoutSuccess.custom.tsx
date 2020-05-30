@@ -32,11 +32,13 @@ const OrderItemDeliveryInfo: React.FC = () => {
 export const CustomCheckoutSuccess: React.FC = () => {
   return (
     <Extend Component={CheckoutSuccess}>
+      {/* Fix headline because some SEO guy complained, and add order number */}
       <Block blockId={'headline'}>
         <h1>Vielen Dank!</h1>
         <OrderNumberInfo />
       </Block>
 
+      {/* Add order delivery time and add a hint about current situation */}
       <Block blockId={'copy'}>
         <Parent />
         <OrderDeliveryInfo />
@@ -48,6 +50,7 @@ export const CustomCheckoutSuccess: React.FC = () => {
       <Block blockId={'order-info'}>
         <Parent />
 
+        {/* Add hint about individual delivery times */}
         <Block blockId={'order-info-title'}>
           <Parent />
           <p style={{ color: 'orangered' }}>
@@ -55,10 +58,10 @@ export const CustomCheckoutSuccess: React.FC = () => {
           </p>
         </Block>
 
+        {/* Add individual delivery times to order items */}
         <Block blockId={'order-item-details'}>
           <Parent />
           <OrderItemDeliveryInfo />
-          <br />
         </Block>
       </Block>
     </Extend>
