@@ -27,6 +27,7 @@ export const CustomCheckoutSuccess: React.FC = () => {
 
       <Block blockId={'order-info'}>
         <Parent />
+
         <Block blockId={'order-info-title'}>
           <Parent />
           <p>Bitte beachten Sie auch die individuellen Lieferzeiten.</p>

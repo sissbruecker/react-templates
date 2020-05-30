@@ -58,7 +58,7 @@ export const Block: React.FC<BlockProps> = ({ blockId, children }) => {
     // Override template context with nested set of blocks
     // Otherwise would run into infinite loop since the outer block context
     // would return the same override block again
-    <TemplateContextProvider rules={[]} blocks={overrideBlock.nestedBlocks}>
+    <TemplateContextProvider blocks={overrideBlock.nestedBlocks}>
       {/* Provide override block with extra data */}
       <BlockContextProvider parent={children}>
         {overrideBlock.node}
