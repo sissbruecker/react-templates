@@ -1,22 +1,19 @@
 import { createContext, ReactNode, useContext } from 'react'
-import { BlockRule, TemplateRule } from './rules'
+import { BlockRule } from './Block'
 
 interface TemplateContextData {
-  rules: TemplateRule[]
   blocks: BlockRule[]
 }
 
 const TemplateContext = createContext<TemplateContextData>({
-  rules: [],
   blocks: [],
 })
 
 export const TemplateContextProvider: React.FC<{
-  rules: TemplateRule[]
   blocks: BlockRule[]
-}> = ({ rules, blocks, children }) => {
+}> = ({ blocks, children }) => {
   return (
-    <TemplateContext.Provider value={{ rules, blocks }}>
+    <TemplateContext.Provider value={{ blocks }}>
       {children}
     </TemplateContext.Provider>
   )
@@ -24,11 +21,6 @@ export const TemplateContextProvider: React.FC<{
 
 export const useTemplateContext = () => {
   return useContext(TemplateContext)
-}
-
-export const useTemplateRules = (blockId: string) => {
-  const { rules } = useContext(TemplateContext)
-  return rules.filter((rule) => rule.blockId === blockId)
 }
 
 export const useBlockOverride = (blockId: string) => {

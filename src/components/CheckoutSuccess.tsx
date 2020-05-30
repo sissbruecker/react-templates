@@ -42,7 +42,7 @@ export const CheckoutSuccess: React.FC = () => {
           <h2>Ihre Bestellung im Überblick:</h2>
         </Block>
         {orderItems.map((item) => (
-          <Block blockId={'order-item'}>
+          <Block blockId={'order-item'} key={item.sku}>
             <div style={{ marginBottom: '20px' }}>
               <Block blockId={'order-item-title'}>
                 <span>

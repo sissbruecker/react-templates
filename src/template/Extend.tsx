@@ -1,7 +1,7 @@
 import React from 'react'
 import { TemplateContextProvider } from './context'
-import { getBlocksFromChildren, getRulesFromChildren } from './rules'
 import { ReactComponentLike } from 'prop-types'
+import { getBlocksFromChildren } from './Block'
 
 export interface ExtendProps {
   Component: ReactComponentLike
@@ -9,11 +9,10 @@ export interface ExtendProps {
 
 export const Extend: React.FC<ExtendProps> = (props) => {
   const { Component, children, ...componentProps } = props
-  const rules = getRulesFromChildren(children)
-  const blocks = getBlocksFromChildren(children)
+  const { blocks } = getBlocksFromChildren(children)
 
   return (
-    <TemplateContextProvider rules={rules} blocks={blocks}>
+    <TemplateContextProvider blocks={blocks}>
       <Component {...componentProps} />
     </TemplateContextProvider>
   )

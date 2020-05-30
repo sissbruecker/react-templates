@@ -31,12 +31,12 @@ export const CustomCheckoutSuccess: React.FC = () => {
           <Parent />
           <p>Bitte beachten Sie auch die individuellen Lieferzeiten.</p>
         </Block>
-      </Block>
 
-      <Block blockId={'order-item-details'}>
-        <Parent />
-        <span>Lieferzeit: 2-3 Tage</span>
-        <br />
+        <Block blockId={'order-item-details'}>
+          <Parent />
+          <span>Lieferzeit: 2-3 Tage</span>
+          <br />
+        </Block>
       </Block>
     </Extend>
   )
