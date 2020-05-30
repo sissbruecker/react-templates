@@ -1,25 +1,45 @@
 import { Extend } from '../template/Extend'
 import { CheckoutSuccess } from './CheckoutSuccess'
 import { Block, Parent } from '../template/Block'
-import { useEffect, useState } from 'react'
+import { useBlockContext } from '../template/context'
+
+const OrderNumberInfo: React.FC = () => {
+  const { data } = useBlockContext()
+  return (
+    <span style={{ color: 'blueviolet' }}>
+      Bestellungs-Nr.: {data?.order?.orderId}
+    </span>
+  )
+}
+
+const OrderDeliveryInfo: React.FC = () => {
+  const { data } = useBlockContext()
+  return (
+    <span style={{ color: 'blueviolet' }}>
+      Diese wird vermutlich in {data?.order?.deliveryTime} Tagen geliefert.
+    </span>
+  )
+}
+const OrderItemDeliveryInfo: React.FC = () => {
+  const { data } = useBlockContext()
+  return (
+    <span style={{ color: 'blueviolet' }}>
+      Lieferzeit: {data?.item?.deliveryTime} Tage
+    </span>
+  )
+}
 
 export const CustomCheckoutSuccess: React.FC = () => {
-  const [orderId, setOrderId] = useState('?')
-
-  useEffect(() => {
-    setTimeout(() => setOrderId('766567'), 5000)
-  }, [])
-
   return (
     <Extend Component={CheckoutSuccess}>
       <Block blockId={'headline'}>
         <h1>Vielen Dank!</h1>
-        <span style={{ color: 'blueviolet' }}>Bestellungs-Nr.: {orderId}</span>
+        <OrderNumberInfo />
       </Block>
 
       <Block blockId={'copy'}>
         <Parent />
-
+        <OrderDeliveryInfo />
         <p style={{ color: 'orangered' }}>
           Aufgrund der aktuellen Krise kann es zu Verzögerungen kommen!
         </p>
@@ -30,12 +50,14 @@ export const CustomCheckoutSuccess: React.FC = () => {
 
         <Block blockId={'order-info-title'}>
           <Parent />
-          <p>Bitte beachten Sie auch die individuellen Lieferzeiten.</p>
+          <p style={{ color: 'orangered' }}>
+            Bitte beachten Sie auch die individuellen Lieferzeiten.
+          </p>
         </Block>
 
         <Block blockId={'order-item-details'}>
           <Parent />
-          <span>Lieferzeit: 2-3 Tage</span>
+          <OrderItemDeliveryInfo />
           <br />
         </Block>
       </Block>

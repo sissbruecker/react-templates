@@ -49,9 +49,10 @@ export const getBlocksFromChildren = (children: ReactNode) => {
 
 export interface BlockProps {
   blockId: string
+  data?: object
 }
 
-export const Block: React.FC<BlockProps> = ({ blockId, children }) => {
+export const Block: React.FC<BlockProps> = ({ blockId, data, children }) => {
   const overrideBlock = useBlockOverride(blockId)
 
   return overrideBlock ? (
@@ -59,13 +60,12 @@ export const Block: React.FC<BlockProps> = ({ blockId, children }) => {
     // Otherwise would run into infinite loop since the outer block context
     // would return the same override block again
     <TemplateContextProvider blocks={overrideBlock.nestedBlocks}>
-      {/* Provide override block with extra data */}
-      <BlockContextProvider parent={children}>
+      <BlockContextProvider parent={children} data={data}>
         {overrideBlock.node}
       </BlockContextProvider>
     </TemplateContextProvider>
   ) : (
-    <>{children}</>
+    <BlockContextProvider data={data}>{children}</BlockContextProvider>
   )
 }
 

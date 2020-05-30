@@ -30,14 +30,24 @@ export const useBlockOverride = (blockId: string) => {
 
 interface BlockContextData {
   parent?: ReactNode
+  data?: any
 }
 
-const BlockContext = createContext<BlockContextData>({})
+const BlockContext = createContext<BlockContextData>({ data: {} })
 
 export const BlockContextProvider: React.FC<BlockContextData> = (props) => {
   const { children, ...contextData } = props
+  const { data: inheritedData, parent: inheritedParent } = useContext(
+    BlockContext
+  )
+
   return (
-    <BlockContext.Provider value={contextData}>
+    <BlockContext.Provider
+      value={{
+        parent: contextData.parent || inheritedParent,
+        data: { ...inheritedData, ...contextData.data },
+      }}
+    >
       {children}
     </BlockContext.Provider>
   )
