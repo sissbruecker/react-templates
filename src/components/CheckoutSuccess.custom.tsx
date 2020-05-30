@@ -2,6 +2,7 @@ import { Extend } from '../template/Extend'
 import { CheckoutSuccess } from './CheckoutSuccess'
 import { Block, Parent } from '../template/Block'
 import { useBlockContext } from '../template/context'
+import { Value } from '../template/Value'
 
 export const CustomCheckoutSuccess: React.FC = () => {
   return (
@@ -9,7 +10,10 @@ export const CustomCheckoutSuccess: React.FC = () => {
       {/* Fix headline because some SEO guy complained, and add order number */}
       <Block blockId={'headline'}>
         <h1>Vielen Dank!</h1>
-        <OrderNumberInfo />
+        <span style={{ color: 'blueviolet' }}>
+          {/* Value can access data that was passed to this or an ancestor block */}
+          Bestellungs-Nr.: <Value path={'order.orderId'} />
+        </span>
       </Block>
 
       {/* Add order delivery time and add a hint about current situation */}
@@ -44,15 +48,7 @@ export const CustomCheckoutSuccess: React.FC = () => {
   )
 }
 
-const OrderNumberInfo: React.FC = () => {
-  const { data } = useBlockContext()
-  return (
-    <span style={{ color: 'blueviolet' }}>
-      Bestellungs-Nr.: {data?.order?.orderId}
-    </span>
-  )
-}
-
+/* Can also extract smaller components to display context data */
 const OrderDeliveryInfo: React.FC = () => {
   const { data } = useBlockContext()
   return (
@@ -61,6 +57,7 @@ const OrderDeliveryInfo: React.FC = () => {
     </span>
   )
 }
+
 const OrderItemDeliveryInfo: React.FC = () => {
   const { data } = useBlockContext()
   return (
