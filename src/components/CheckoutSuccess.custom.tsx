@@ -1,5 +1,5 @@
 import { Extend } from '../template/Extend'
-import { CheckoutSuccess } from './CheckoutSuccess'
+import { CheckoutSuccess, CheckoutSuccessContext } from './CheckoutSuccess'
 import { Block, Parent } from '../template/Block'
 import { useBlockContext } from '../template/context'
 import { Value } from '../template/Value'
@@ -12,7 +12,7 @@ export const CustomCheckoutSuccess: React.FC = () => {
         <h1>Vielen Dank!</h1>
         <span style={{ color: 'blueviolet' }}>
           {/* Value can access data that was passed to this or an ancestor block */}
-          Bestellungs-Nr.: <Value path={'order.orderId'} />
+          Bestellungs-Nr.: <Value get={'order.orderId'} />
         </span>
       </Block>
 
@@ -20,7 +20,14 @@ export const CustomCheckoutSuccess: React.FC = () => {
       <Block blockId={'copy'}>
         {/* Parent renders the original elements */}
         <Parent />
-        <OrderDeliveryInfo />
+        <span style={{ color: 'blueviolet' }}>
+          Diese wird vermutlich in
+          {/* Typing data context */}
+          <Value<CheckoutSuccessContext>
+            get={(data) => data.order.deliveryTime}
+          />{' '}
+          Tagen geliefert.
+        </span>
         <p style={{ color: 'orangered' }}>
           Aufgrund der aktuellen Krise kann es zu Verzögerungen kommen!
         </p>
@@ -49,15 +56,6 @@ export const CustomCheckoutSuccess: React.FC = () => {
 }
 
 /* Can also extract smaller components to display context data */
-const OrderDeliveryInfo: React.FC = () => {
-  const { data } = useBlockContext()
-  return (
-    <span style={{ color: 'blueviolet' }}>
-      Diese wird vermutlich in {data?.order?.deliveryTime} Tagen geliefert.
-    </span>
-  )
-}
-
 const OrderItemDeliveryInfo: React.FC = () => {
   const { data } = useBlockContext()
   return (

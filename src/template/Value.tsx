@@ -1,12 +1,14 @@
-import get from 'lodash/get'
+import genericGet from 'lodash/get'
 import { useBlockContext } from './context'
 
-interface ValueProps {
-  path: string
+interface ValueProps<TContext> {
+  get: string | ((context: TContext) => any)
 }
 
-export const Value: React.FC<ValueProps> = ({ path }) => {
+export const Value = <TContext extends any>({ get }: ValueProps<TContext>) => {
   const { data } = useBlockContext()
 
-  return get(data, path)
+  if (typeof get === 'string') return genericGet(data, get)
+
+  return get(data) || null
 }

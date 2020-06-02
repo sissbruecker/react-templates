@@ -26,6 +26,11 @@ const order = {
 }
 
 type OrderItemData = typeof order['items'][0]
+type Order = typeof order
+
+export interface CheckoutSuccessContext {
+  order: Order
+}
 
 export const CheckoutSuccess: React.FC = () => {
   return (
